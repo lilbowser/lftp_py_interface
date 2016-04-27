@@ -1,0 +1,26 @@
+#!/usr/bin/expect --
+# Description: unbuffer stdout of a program
+# Author: Don Libes, NIST
+#http://stackoverflow.com/questions/9276717/advertise-custom-terminal-size-while-running-expect-from-a-php-webpage
+set stty_init "rows 100 cols 250"
+
+set port [lindex $argv 0]
+set login [lindex $argv 1]
+set pass [lindex $argv 2]
+set host [lindex $argv 3]
+set remote_dir [lindex $argv 4]
+set local_dir [lindex $argv 5]
+
+eval spawn -noecho lftp -p $port -u $login,$pass sftp://$host
+
+send "set ftp:ssl-allow no\r"
+send "set pget:default-n 15\r"
+send "set mirror:use-pget-n 15\r"
+
+send "mirror -c -P2 -L --Remove-source-files --no-empty-dirs $remote_dir $local_dir\r"
+#expect "jg1010@x303.seedstuff.ca:~>"
+send "quit\r"
+set timeout -1
+expect "Exiting script."
+exit 0
+#interact

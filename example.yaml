@@ -1,0 +1,17 @@
+---
+# Configuration data for LFTP Script
+local:
+  cygwin_path: "Path to cygwin"
+
+server:
+  username: "server username"
+  password: "server password"
+  hostname: "server address"
+  port: 1234 # server port
+  remote_directories:
+    - "first remote dir to mirror"
+    - "second remote dir to mirror"
+  local_directories:
+    - "local mirror dir for first remote"
+    - "local mirror dir for second remote"
+...
